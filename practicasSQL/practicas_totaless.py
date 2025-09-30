@@ -45,6 +45,24 @@ with sqlite3.connect("NorthWind.db") as conn1:
     results_df2= pd.DataFrame(results2)
     print(results_df2)
     
+    
+    # Ganancias Del año 1997
+    
+    query4= """
+    select OrderDate, Sum(Price * Quantity) as Total_ganado
+    from Orders o
+    join OrderDetails od on o.OrderID= od.OrderID
+    join Products p on p.ProductID= od.ProductID
+    where OrderDate BETWEEN	"1997-01-01" and "1997-12-31"
+    group by OrderDate
+    order by Total_ganado DESC
+    """
+    cursor.execute(query4)
+    results3= cursor.fetchall()
+    results_df3= pd.DataFrame(results3)
+    print(results_df3)
+    
+    
       
 
 
