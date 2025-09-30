@@ -1,0 +1,35 @@
+import sqlite3
+import pandas as pd 
+import matplotlib.pyplot as plt
+
+
+with sqlite3.connect("NorthWind.db") as conn1:
+
+# Obteniendo los productos de categoria 3 y 5
+    query1="select ProductName from Products where CategoryID= 3 or CategoryID= 5 Order by Random() limit 5"
+    cursor=conn1.cursor()
+    cursor.execute(query1)
+    results= cursor.fetchall()
+    results_df= pd.DataFrame(results)
+    print(results_df)
+
+
+
+
+    
+    #PROVEEDORES QUE MAS PRODUCTOS HAN TRAIDO 
+    query2= """
+    
+    select SupplierName, Count(*) as Total
+    from Suppliers S 
+    join Products p on S.SupplierID= p.SupplierID 
+    group by S.SupplierID
+    order by Total Desc
+    """
+    cursor.execute(query2)
+    results1= cursor.fetchall()
+    results_df1= pd.DataFrame(results1)
+    print(results_df1)
+      
+
+
