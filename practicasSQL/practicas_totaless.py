@@ -30,6 +30,21 @@ with sqlite3.connect("NorthWind.db") as conn1:
     results1= cursor.fetchall()
     results_df1= pd.DataFrame(results1)
     print(results_df1)
+    
+    #Find employees who have processed orders for customers in France.
+    
+    query3= """
+    SELECT DISTINCT e.FirstName || ' ' || e.LastName AS EmployeeName
+    FROM Employees e
+    JOIN Orders o ON e.EmployeeID = o.EmployeeID
+    JOIN Customers c ON o.CustomerID = c.CustomerID
+    WHERE c.Country = 'France'
+    """
+    cursor.execute(query3)
+    results2= cursor.fetchall()
+    results_df2= pd.DataFrame(results2)
+    print(results_df2)
+    
       
 
 
